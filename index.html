@@ -561,5 +561,36 @@
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b9d87cd45ccb0f0',t:'MTc2NzcyNjc4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
  <script src="_sdk/element_sdk.js"></script>
 <script src="_sdk/data_sdk.js"></script>
+<script>
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById('form-name').value,
+    email: document.getElementById('form-email').value,
+    phone: document.getElementById('form-phone').value,
+    service: document.getElementById('form-service').value,
+    message: document.getElementById('form-message').value
+  };
+
+  try {
+    const response = await fetch('/send-message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.text();
+    alert(result);
+
+    // Reset form
+    e.target.reset();
+  } catch (err) {
+    alert('Failed to send message. Try again.');
+    console.error(err);
+  }
+});
+</script>
+
  </body>
 </html>

@@ -1,0 +1,7 @@
+# Node backend
+backend/node_modules/
+backend/.env
+
+# OS junk
+.DS_Store
+Thumbs.db
