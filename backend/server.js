@@ -1,17 +1,23 @@
 import express from "express";
 
 const app = express();
-const PORT = 8000;
 
-// Middleware to parse JSON
+// middleware
 app.use(express.json());
 
-// Test route
+// test route
 app.get("/", (req, res) => {
-  res.send("Prolab Africa backend server is running!");
+  res.send("Prolab Africa backend running");
 });
 
-// Start server
+// contact route (temporary test)
+app.post("/send-message", (req, res) => {
+  console.log(req.body);
+  res.send("Message received");
+});
+
+// IMPORTANT: Render provides PORT
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
