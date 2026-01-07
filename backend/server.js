@@ -1,23 +1,36 @@
-import express from "express";
+import express from "express";  // or const express = require("express");
+import cors from "cors";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(express.json()); // allows req.body to contain JSON
 
-// middleware
-app.use(express.json());
 
-// test route
+// 1️⃣ Middleware (must come **before routes**)
+app.use(cors()); // allow cross-origin requests
+app.use(express.json()); // parse JSON bodies
+
+// 2️⃣ Your existing routes
 app.get("/", (req, res) => {
-  res.send("Prolab Africa backend running");
+  res.send("Prolab Africa API is running");
 });
 
-// contact route (temporary test)
+// 3️⃣ Contact form route (**this is where the frontend POST goes**)
 app.post("/send-message", (req, res) => {
-  console.log(req.body);
-  res.send("Message received");
+  const { name, email, phone, service, message } = req.body;
+
+  console.log("Contact form received:", req.body);
+
+  // Here you can:
+  // - Send an email
+  // - Save to a database
+  // - Trigger any internal workflow
+
+  // Then respond back to frontend
+  res.status(200).send("Message received!");
 });
 
-// IMPORTANT: Render provides PORT
-const PORT = process.env.PORT || 8000;
+// 4️⃣ Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
